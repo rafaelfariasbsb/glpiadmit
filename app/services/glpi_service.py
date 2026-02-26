@@ -1,15 +1,33 @@
 import logging
+import re
+from enum import IntEnum
 
 import httpx
+from tenacity import (
+    AsyncRetrying,
+    before_sleep_log,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 from app.config import get_settings
-from app.models import UserCreationResult
+from app.models import UserCreationPayload, UserCreationResult
 
 logger = logging.getLogger(__name__)
 
-# Status ITIL do GLPI
-_STATUS_PENDING = 4
-_STATUS_SOLVED = 5
+
+class TicketStatus(IntEnum):
+    """Status ITIL do chamado no GLPI."""
+    PENDING = 4   # Pendente (erro na criacao)
+    SOLVED  = 5   # Resolvido (sucesso)
+
+
+# Compilado uma unica vez no carregamento do modulo
+_FORM_PATTERN = re.compile(
+    r"<b>\d+\)\s*([^<]+)</b>\s*:\s*([^<]+)",
+    re.IGNORECASE,
+)
 
 
 class GLPIService:
@@ -34,7 +52,7 @@ class GLPIService:
         return h
 
     async def _init_session(self, client: httpx.AsyncClient) -> str:
-        """Inicia uma sessao na API do GLPI."""
+        """Inicia uma sessao na API do GLPI e ativa o perfil de maior privilegio disponivel."""
         headers = {
             **self._headers(with_session=False),
             "Authorization": f"user_token {self._api_token}",
@@ -42,6 +60,25 @@ class GLPIService:
         response = await client.get(f"{self._base_url}/initSession", headers=headers)
         response.raise_for_status()
         self._session_token = response.json()["session_token"]
+
+        # Tenta ativar o perfil de maior privilegio (Super-Admin > Admin > outros)
+        profiles_resp = await client.get(f"{self._base_url}/getMyProfiles", headers=self._headers())
+        if profiles_resp.status_code == 200:
+            profiles = profiles_resp.json().get("myprofiles", [])
+            priority = {"super-admin": 0, "admin": 1}
+            best = min(
+                profiles,
+                key=lambda p: priority.get(p.get("name", "").lower(), 99),
+                default=None,
+            )
+            if best and best.get("id"):
+                await client.post(
+                    f"{self._base_url}/changeActiveProfile",
+                    headers=self._headers(),
+                    json={"profiles_id": best["id"]},
+                )
+                logger.debug("Perfil GLPI ativado: %s (id=%d)", best.get("name"), best["id"])
+
         logger.info("Sessao GLPI iniciada")
         return self._session_token
 
@@ -111,11 +148,11 @@ class GLPIService:
 
     async def _update_ticket_status(self, client: httpx.AsyncClient, result: UserCreationResult) -> None:
         """Atualiza status do chamado: Resolvido (sucesso) ou Pendente (erro)."""
-        status = _STATUS_SOLVED if result.success else _STATUS_PENDING
+        status = TicketStatus.SOLVED if result.success else TicketStatus.PENDING
         response = await client.put(
             f"{self._base_url}/Ticket/{result.ticket_id}",
             headers=self._headers(),
-            json={"input": {"status": status}},
+            json={"input": {"status": int(status)}},
         )
         response.raise_for_status()
         logger.info(
@@ -124,14 +161,78 @@ class GLPIService:
             "Resolvido" if result.success else "Pendente",
         )
 
-    async def update_ticket(self, result: UserCreationResult) -> None:
-        """Adiciona followup ao chamado e atualiza status conforme resultado."""
+    @staticmethod
+    def parse_ticket_content(item: dict) -> UserCreationPayload | None:
+        """Extrai dados do usuario a partir do conteudo HTML do ticket gerado pelo formulario GLPI.
+
+        O formulario cria tickets com conteudo no formato:
+            <b>1) Nome</b>: {valor}<br>
+            <b>2) Sobrenome</b>: {valor}<br>
+            ...
+
+        Retorna None se o conteudo nao corresponde ao formulario de criacao de usuario.
+        """
+        ticket_id = item.get("id")
+        content = item.get("content", "")
+        if not content or not ticket_id:
+            return None
+
+        # Extrai pares "Rotulo: Valor" do HTML usando o pattern pre-compilado
+        fields: dict[str, str] = {}
+        for match in _FORM_PATTERN.finditer(content):
+            label = match.group(1).strip().lower()
+            value = match.group(2).strip()
+            fields[label] = value
+
+        logger.debug("Campos extraidos do conteudo do ticket #%d: %s", ticket_id, fields)
+
+        # Verificar se os campos obrigatorios estao presentes
+        required = {"nome", "sobrenome", "e-mail corporativo"}
+        if not required.issubset(fields.keys()):
+            logger.debug(
+                "Ticket #%d nao tem campos do formulario de usuario AD (campos: %s)",
+                ticket_id, list(fields.keys()),
+            )
+            return None
+
+        grupo_raw = fields.get("grupo ad", "").strip()
+        return UserCreationPayload(
+            ticket_id=ticket_id,
+            first_name=fields.get("nome", ""),
+            last_name=fields.get("sobrenome", ""),
+            email=fields.get("e-mail corporativo", ""),
+            department=fields.get("departamento", ""),
+            title=fields.get("cargo", ""),
+            groups=[grupo_raw] if grupo_raw else [],
+        )
+
+    async def _do_update_ticket(self, result: UserCreationResult) -> None:
+        """Executa followup + atualizacao de status numa sessao GLPI."""
         async with httpx.AsyncClient(verify=self._verify_ssl, timeout=30.0) as client:
             try:
                 await self._init_session(client)
                 await self._add_followup(client, result)
                 await self._update_ticket_status(client, result)
-            except httpx.HTTPError as e:
-                logger.error("Erro ao atualizar chamado #%d no GLPI: %s", result.ticket_id, e)
             finally:
                 await self._kill_session(client)
+
+    async def update_ticket(self, result: UserCreationResult) -> None:
+        """Adiciona followup ao chamado e atualiza status conforme resultado.
+
+        Realiza ate 3 tentativas com backoff exponencial em caso de falha HTTP.
+        """
+        try:
+            async for attempt in AsyncRetrying(
+                stop=stop_after_attempt(3),
+                wait=wait_exponential(multiplier=1, min=2, max=10),
+                retry=retry_if_exception_type(httpx.HTTPError),
+                before_sleep=before_sleep_log(logger, logging.WARNING),
+                reraise=True,
+            ):
+                with attempt:
+                    await self._do_update_ticket(result)
+        except httpx.HTTPError as e:
+            logger.error(
+                "Erro ao atualizar chamado #%d no GLPI apos 3 tentativas: %s",
+                result.ticket_id, e,
+            )

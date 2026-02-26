@@ -4,7 +4,7 @@ import httpx
 import pytest
 
 from app.models import UserCreationResult
-from app.services.glpi_service import GLPIService
+from app.services.glpi_service import GLPIService, TicketStatus
 
 
 @pytest.fixture
@@ -60,6 +60,99 @@ class TestBuildFollowupContent:
         )
         content = GLPIService._build_followup_content(result)
         assert "Grupos" not in content
+
+
+class TestParseTicketContent:
+    def test_valid_form_content_returns_payload(self):
+        item = {
+            "id": 42,
+            "content": (
+                "<b>1) Nome</b>: Rafael<br>"
+                "<b>2) Sobrenome</b>: Silva<br>"
+                "<b>3) E-mail corporativo</b>: rafael.silva@empresa.com<br>"
+                "<b>4) Departamento</b>: TI<br>"
+                "<b>5) Cargo</b>: Analista<br>"
+                "<b>6) Grupo AD</b>: CN=GRP-TI,OU=Grupos,DC=empresa,DC=local<br>"
+            ),
+        }
+        payload = GLPIService.parse_ticket_content(item)
+
+        assert payload is not None
+        assert payload.ticket_id == 42
+        assert payload.first_name == "Rafael"
+        assert payload.last_name == "Silva"
+        assert payload.email == "rafael.silva@empresa.com"
+        assert payload.department == "TI"
+        assert payload.title == "Analista"
+        assert payload.groups == ["CN=GRP-TI,OU=Grupos,DC=empresa,DC=local"]
+
+    def test_form_without_group_returns_empty_groups(self):
+        item = {
+            "id": 43,
+            "content": (
+                "<b>1) Nome</b>: Maria<br>"
+                "<b>2) Sobrenome</b>: Santos<br>"
+                "<b>3) E-mail corporativo</b>: maria@empresa.com<br>"
+                "<b>4) Departamento</b>: RH<br>"
+                "<b>5) Cargo</b>: Analista<br>"
+                "<b>6) Grupo AD</b>: <br>"
+            ),
+        }
+        payload = GLPIService.parse_ticket_content(item)
+
+        assert payload is not None
+        assert payload.groups == []
+
+    def test_non_form_ticket_returns_none(self):
+        item = {
+            "id": 99,
+            "content": "Preciso de suporte tecnico com meu computador.",
+        }
+        assert GLPIService.parse_ticket_content(item) is None
+
+    def test_missing_required_field_returns_none(self):
+        # Sem "E-mail corporativo"
+        item = {
+            "id": 100,
+            "content": (
+                "<b>1) Nome</b>: Rafael<br>"
+                "<b>2) Sobrenome</b>: Silva<br>"
+            ),
+        }
+        assert GLPIService.parse_ticket_content(item) is None
+
+    def test_empty_content_returns_none(self):
+        assert GLPIService.parse_ticket_content({"id": 1, "content": ""}) is None
+
+    def test_missing_ticket_id_returns_none(self):
+        assert GLPIService.parse_ticket_content({"content": "<b>1) Nome</b>: X<br>"}) is None
+
+    def test_case_insensitive_labels(self):
+        item = {
+            "id": 50,
+            "content": (
+                "<B>1) NOME</B>: Pedro<br>"
+                "<B>2) SOBRENOME</B>: Costa<br>"
+                "<B>3) E-MAIL CORPORATIVO</B>: pedro@empresa.com<br>"
+                "<B>4) DEPARTAMENTO</B>: TI<br>"
+                "<B>5) CARGO</B>: Dev<br>"
+            ),
+        }
+        payload = GLPIService.parse_ticket_content(item)
+        assert payload is not None
+        assert payload.first_name == "Pedro"
+
+
+class TestTicketStatus:
+    def test_solved_equals_5(self):
+        assert TicketStatus.SOLVED == 5
+
+    def test_pending_equals_4(self):
+        assert TicketStatus.PENDING == 4
+
+    def test_is_int(self):
+        assert isinstance(TicketStatus.SOLVED, int)
+        assert isinstance(TicketStatus.PENDING, int)
 
 
 class TestUpdateTicket:

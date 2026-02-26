@@ -21,6 +21,7 @@ NoNewPrivileges=true
 ProtectSystem=strict
 ProtectHome=true
 ReadWritePaths=/opt/glpi-ad-integration
+ReadOnlyPaths=/etc/ssl/certs /etc/ssl/private /usr/share/ca-certificates
 PrivateTmp=true
 
 [Install]

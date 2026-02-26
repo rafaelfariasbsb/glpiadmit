@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     ad_bind_user: str = "CN=svc-glpi-ad,OU=ServiceAccounts,DC=empresa,DC=local"
     ad_bind_password: str = ""
     ad_default_company: str = "Empresa"
+    ad_verify_cert: bool = True  # False apenas para testes com certificado auto-assinado
 
     # Webhook
     webhook_secret: str = ""

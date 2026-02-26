@@ -23,6 +23,12 @@ def _setup_logging() -> None:
 async def lifespan(app: FastAPI):
     """Gerencia ciclo de vida da aplicacao (startup/shutdown)."""
     _setup_logging()
+    settings = get_settings()
+    if not settings.webhook_secret:
+        logger.warning(
+            "ATENCAO: WEBHOOK_SECRET nao configurado — qualquer requisicao sera aceita "
+            "sem validacao de assinatura HMAC. Configure WEBHOOK_SECRET em producao."
+        )
     logger.info("Servico de integracao GLPI-AD iniciado")
     yield
     logger.info("Servico de integracao GLPI-AD encerrado")

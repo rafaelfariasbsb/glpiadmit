@@ -1,0 +1,39 @@
+# =============================================================================
+# Override — Topologia B: GLPIADmit no mesmo servidor que o GLPI (Docker)
+#
+# Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.same-host.yml up -d
+#
+# Pré-requisito:
+#   Descobrir o nome da rede Docker do GLPI:
+#     docker inspect <nome-do-container-glpi> \
+#       --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}'
+#   Substitua o valor de "name:" abaixo pelo nome real da rede.
+#
+# URL do webhook no GLPI:
+#   http://glpiadmit/webhook/glpi-native
+# =============================================================================
+
+services:
+  glpiadmit:
+    # Escuta na porta 80 internamente.
+    # O GLPI bloqueia URLs com porta explícita (ex: :8443) via isUrlSafe(),
+    # então o GLPIADmit precisa responder na porta 80 sem porta na URL.
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--workers", "2"]
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:80/health')"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    networks:
+      - default
+      - glpi_network
+
+networks:
+  glpi_network:
+    external: true
+    name: glpi_default    # <- substituir pelo nome real da rede Docker do GLPI

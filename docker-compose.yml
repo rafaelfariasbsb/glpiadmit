@@ -1,0 +1,48 @@
+services:
+  glpiadmit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: glpiadmit:latest
+    container_name: glpiadmit
+
+    # Lê variáveis do arquivo .env (copiar de .env.example e configurar)
+    env_file:
+      - .env
+
+    ports:
+      # <porta-host>:<porta-container>
+      # Ajuste a porta do host se necessário (ex: "443:8443" com TLS na frente)
+      - "8443:8443"
+
+    restart: unless-stopped
+
+    # Health check via endpoint /health
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8443/health')"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+
+    # Logs com tamanho controlado
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    # Limites de recursos — ajuste conforme a carga esperada
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+          cpus: "0.5"
+
+    # O container precisa alcançar o AD (porta 636) e o GLPI (porta 443)
+    # em redes externas — não há outros serviços no compose.
+    # Se AD/GLPI estiverem em hosts locais (não no Docker), use:
+    #   extra_hosts:
+    #     - "dc01.empresa.local:192.168.1.10"
+    #     - "glpi.empresa.local:192.168.1.20"

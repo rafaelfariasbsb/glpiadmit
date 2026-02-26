@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 
 from ldap3 import Connection, Server, SUBTREE, MODIFY_REPLACE, Tls
 from ldap3.core.exceptions import LDAPException
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type, before_sleep_log
 
 from app.config import get_settings
 from app.models import UserCreationPayload, UserCreationResult
@@ -24,11 +25,18 @@ UAC_NORMAL_ACCOUNT = 512
 UAC_DISABLED_ACCOUNT = 514
 
 
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=2, max=10),
+    retry=retry_if_exception_type(LDAPException),
+    before_sleep=before_sleep_log(logger, logging.WARNING),
+    reraise=True,
+)
 def _build_connection() -> Connection:
-    """Cria conexao LDAPS com o AD."""
+    """Cria conexao LDAPS com o AD. Tenta ate 3 vezes com backoff exponencial."""
     settings = get_settings()
     tls_config = Tls(
-        validate=ssl.CERT_REQUIRED if settings.ad_use_ssl else ssl.CERT_NONE,
+        validate=ssl.CERT_REQUIRED if (settings.ad_use_ssl and settings.ad_verify_cert) else ssl.CERT_NONE,
     )
     server = Server(
         settings.ad_server,
