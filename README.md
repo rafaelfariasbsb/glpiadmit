@@ -50,24 +50,7 @@ Then in GLPI:
 3. Go to **Setup > Plugins > GLPIADmit > Configuration**
 4. Fill in the AD connection details and click **Test Connection**
 
-### Development Environment
-
-```bash
-git clone https://github.com/rafaelfariasbsb/glpiadmit.git
-cd glpiadmit
-cp .env.example .env
-docker compose up -d
-
-# Wait ~60s for Samba DC to initialize, then seed the AD:
-docker exec glpiadmit-samba-dc bash /opt/init-samba.sh
-```
-
-| Service | URL |
-|---|---|
-| GLPI | http://localhost:8080 |
-| Mailpit | http://localhost:8025 |
-| DBGate | http://localhost:9000 |
-| Samba AD (LDAP) | ldap://localhost:389 |
+See [docs/07-development-guide.md](docs/07-development-guide.md) for the Docker-based development environment setup.
 
 ## How It Works
 
@@ -87,7 +70,7 @@ Service Catalog Form
         │                                    │
         ▼                          ┌─────────┴─────────┐
    Ticket Updated            Success                Error
-                          (Resolved)             (Pending)
+                          (Solved)               (Waiting)
                         Private followup      Public followup
                         + Public followup     + Retry (up to 3x)
 ```
