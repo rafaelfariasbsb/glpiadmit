@@ -1,38 +1,6 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-dist/
-build/
-*.egg
-
-# Virtual environment
-venv/
-.venv/
-env/
-
-# Environment variables (NEVER commit)
-.env
-
-# IDE
-.vscode/
 .idea/
 *.swp
 *.swo
-*~
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Logs
-*.log
-
-# Internal documents
-email_aprovacao_projeto.html
+vendor/
+.env

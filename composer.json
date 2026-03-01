@@ -1,0 +1,33 @@
+{
+    "name": "rafaelfariasbsb/glpiadmit",
+    "description": "GLPI plugin for automated Active Directory user creation from service catalog tickets",
+    "type": "glpi-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Rafael Farias",
+            "homepage": "https://github.com/rafaelfariasbsb"
+        }
+    ],
+    "homepage": "https://github.com/rafaelfariasbsb/glpiadmit",
+    "support": {
+        "issues": "https://github.com/rafaelfariasbsb/glpiadmit/issues",
+        "source": "https://github.com/rafaelfariasbsb/glpiadmit"
+    },
+    "require": {
+        "php": ">=8.2",
+        "ext-ldap": "*"
+    },
+    "suggest": {
+        "ext-intl": "Recommended for accurate transliteration (iconv fallback available)"
+    },
+    "autoload": {
+        "psr-4": {
+            "GlpiPlugin\\Glpiadmit\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}

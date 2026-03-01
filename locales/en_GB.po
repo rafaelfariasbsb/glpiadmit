@@ -1,0 +1,220 @@
+# GLPI GLPIADmit Plugin - English Translation
+# Copyright (C) 2026 Rafael Farias
+# This file is distributed under the same license as the GLPIADmit plugin.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPIADmit 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/rafaelfariasbsb/glpiadmit/issues\n"
+"POT-Creation-Date: 2026-03-01 00:00+0000\n"
+"PO-Revision-Date: 2026-03-01 00:00+0000\n"
+"Last-Translator: Rafael Farias\n"
+"Language-Team: English\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "GLPIADmit Queue"
+msgid_plural "GLPIADmit Queue"
+msgstr[0] "GLPIADmit Queue"
+msgstr[1] "GLPIADmit Queues"
+
+msgid "Ticket"
+msgstr "Ticket"
+
+msgid "First Name"
+msgstr "First Name"
+
+msgid "Last Name"
+msgstr "Last Name"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Attempts"
+msgstr "Attempts"
+
+msgid "Error Message"
+msgstr "Error Message"
+
+msgid "Date Created"
+msgstr "Date Created"
+
+msgid "Date Modified"
+msgstr "Date Modified"
+
+msgid "No GLPIADmit queue item for this ticket."
+msgstr "No GLPIADmit queue item for this ticket."
+
+msgid "GLPIADmit Queue Item"
+msgstr "GLPIADmit Queue Item"
+
+msgid "View Details"
+msgstr "View Details"
+
+msgid "Process GLPIADmit AD user creation queue"
+msgstr "Process GLPIADmit AD user creation queue"
+
+msgid "Pending"
+msgstr "Pending"
+
+msgid "Processing"
+msgstr "Processing"
+
+msgid "Done"
+msgstr "Done"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Invalid DN format in groups: \"%s\""
+msgstr "Invalid DN format in groups: \"%s\""
+
+msgid "Invalid value for field \"%s\". Please check the format."
+msgstr "Invalid value for field \"%s\". Please check the format."
+
+msgid "Configuration updated successfully."
+msgstr "Configuration updated successfully."
+
+msgid "Please wait 5 seconds between connection tests."
+msgstr "Please wait 5 seconds between connection tests."
+
+msgid "LDAP connection successful!"
+msgstr "LDAP connection successful!"
+
+msgid "Connection test failed: %s"
+msgstr "Connection test failed: %s"
+
+msgid "Invalid queue item."
+msgstr "Invalid queue item."
+
+msgid "Queue item not found."
+msgstr "Queue item not found."
+
+msgid "This item cannot be retried (permanent error or not in error state)."
+msgstr "This item cannot be retried (permanent error or not in error state)."
+
+msgid "Item queued for retry."
+msgstr "Item queued for retry."
+
+msgid "Force retry is only available for items in error state."
+msgstr "Force retry is only available for items in error state."
+
+msgid "Item queued for forced retry (permanent error flag cleared)."
+msgstr "Item queued for forced retry (permanent error flag cleared)."
+
+msgid "GLPIADmit"
+msgstr "GLPIADmit"
+
+msgid "Warning: CronTask last executed at %s (more than 5 minutes ago)."
+msgstr "Warning: CronTask last executed at %s (more than 5 minutes ago)."
+
+msgid "Warning: CronTask has never been executed."
+msgstr "Warning: CronTask has never been executed."
+
+msgid "AD Connection"
+msgstr "AD Connection"
+
+msgid "Enabled"
+msgstr "Enabled"
+
+msgid "AD Server"
+msgstr "AD Server"
+
+msgid "Hostname or IP address (e.g. dc01.empresa.local). Do NOT include ldaps:// prefix."
+msgstr "Hostname or IP address (e.g. dc01.example.local). Do NOT include ldaps:// prefix."
+
+msgid "Port"
+msgstr "Port"
+
+msgid "LDAPS default: 636, LDAP default: 389"
+msgstr "LDAPS default: 636, LDAP default: 389"
+
+msgid "Use SSL (LDAPS)"
+msgstr "Use SSL (LDAPS)"
+
+msgid "Bind DN"
+msgstr "Bind DN"
+
+msgid "Service account DN (e.g. CN=svc-glpi,OU=ServiceAccounts,DC=empresa,DC=local)"
+msgstr "Service account DN (e.g. CN=svc-glpi,OU=ServiceAccounts,DC=example,DC=local)"
+
+msgid "Bind Password"
+msgstr "Bind Password"
+
+msgid "AD Structure"
+msgstr "AD Structure"
+
+msgid "Base DN"
+msgstr "Base DN"
+
+msgid "Search base for duplicate checks (e.g. DC=empresa,DC=local)"
+msgstr "Search base for duplicate checks (e.g. DC=example,DC=local)"
+
+msgid "User OU"
+msgstr "User OU"
+
+msgid "OU where new users will be created (e.g. OU=Users,DC=empresa,DC=local)"
+msgstr "OU where new users will be created (e.g. OU=Users,DC=example,DC=local)"
+
+msgid "Domain"
+msgstr "Domain"
+
+msgid "AD domain name (e.g. empresa.local)"
+msgstr "AD domain name (e.g. example.local)"
+
+msgid "UPN Suffix"
+msgstr "UPN Suffix"
+
+msgid "Must start with @ (e.g. @empresa.com)"
+msgstr "Must start with @ (e.g. @example.com)"
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "AD Groups"
+msgstr "AD Groups"
+
+msgid "One group DN per line (e.g. CN=VPN-Users,OU=Groups,DC=empresa,DC=local)"
+msgstr "One group DN per line (e.g. CN=VPN-Users,OU=Groups,DC=example,DC=local)"
+
+msgid "Test Connection"
+msgstr "Test Connection"
+
+msgid "Queue Item Details"
+msgstr "Queue Item Details"
+
+msgid "Ticket ID"
+msgstr "Ticket ID"
+
+msgid "Department"
+msgstr "Department"
+
+msgid "Job Title"
+msgstr "Job Title"
+
+msgid "Permanent Error"
+msgstr "Permanent Error"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
+
+msgid "Retry"
+msgstr "Retry"
+
+msgid "Force Retry"
+msgstr "Force Retry"
+
+msgid "This is a permanent error. Are you sure you want to force retry?"
+msgstr "This is a permanent error. Are you sure you want to force retry?"

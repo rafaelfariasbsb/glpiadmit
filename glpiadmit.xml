@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <name>GLPIADmit</name>
+    <key>glpiadmit</key>
+    <state>stable</state>
+    <description>
+        <short>
+            <en><![CDATA[Automated Active Directory user provisioning from GLPI service catalog tickets]]></en>
+            <pt_BR><![CDATA[Provisionamento automatizado de usuários no Active Directory a partir de tickets do catálogo de serviços GLPI]]></pt_BR>
+        </short>
+        <long>
+            <en><![CDATA[GLPIADmit automates Active Directory user creation from GLPI Service Catalog tickets. When a ticket is created from a configured form, the plugin parses the content, queues the request, and asynchronously creates the user in AD with proper credentials, group membership, and ticket followups. Features include retry logic, rollback on failure, duplicate detection, LDAP injection protection, and encrypted credential storage.]]></en>
+            <pt_BR><![CDATA[GLPIADmit automatiza a criação de usuários no Active Directory a partir de tickets do Catálogo de Serviços GLPI. Quando um ticket é criado a partir de um formulário configurado, o plugin analisa o conteúdo, enfileira a solicitação e cria assincronamente o usuário no AD com credenciais adequadas, associação a grupos e acompanhamentos no ticket. Inclui lógica de retry, rollback em falha, detecção de duplicatas, proteção contra LDAP injection e armazenamento criptografado de credenciais.]]></pt_BR>
+        </long>
+    </description>
+    <homepage>https://github.com/rafaelfariasbsb/glpiadmit</homepage>
+    <download>https://github.com/rafaelfariasbsb/glpiadmit/releases</download>
+    <issues>https://github.com/rafaelfariasbsb/glpiadmit/issues</issues>
+    <readme>https://raw.githubusercontent.com/rafaelfariasbsb/glpiadmit/main/README.md</readme>
+    <authors>
+        <author>Rafael Farias</author>
+    </authors>
+    <versions>
+        <version>
+            <num>1.0.0</num>
+            <compatibility>~11.0.0</compatibility>
+            <download_url>https://github.com/rafaelfariasbsb/glpiadmit/releases/download/v1.0.0/glpiadmit-1.0.0.tar.gz</download_url>
+        </version>
+    </versions>
+    <langs>
+        <lang>en_GB</lang>
+        <lang>pt_BR</lang>
+    </langs>
+    <license>GPLv3+</license>
+    <tags>
+        <en>
+            <tag>active directory</tag>
+            <tag>ldap</tag>
+            <tag>user provisioning</tag>
+            <tag>automation</tag>
+            <tag>service catalog</tag>
+        </en>
+    </tags>
+</root>

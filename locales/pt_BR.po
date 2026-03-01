@@ -1,0 +1,220 @@
+# GLPI GLPIADmit Plugin - Brazilian Portuguese Translation
+# Copyright (C) 2026 Rafael Farias
+# This file is distributed under the same license as the GLPIADmit plugin.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPIADmit 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/rafaelfariasbsb/glpiadmit/issues\n"
+"POT-Creation-Date: 2026-03-01 00:00+0000\n"
+"PO-Revision-Date: 2026-03-01 00:00+0000\n"
+"Last-Translator: Rafael Farias\n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "GLPIADmit Queue"
+msgid_plural "GLPIADmit Queue"
+msgstr[0] "Fila GLPIADmit"
+msgstr[1] "Filas GLPIADmit"
+
+msgid "Ticket"
+msgstr "Chamado"
+
+msgid "First Name"
+msgstr "Nome"
+
+msgid "Last Name"
+msgstr "Sobrenome"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Attempts"
+msgstr "Tentativas"
+
+msgid "Error Message"
+msgstr "Mensagem de Erro"
+
+msgid "Date Created"
+msgstr "Data de Criação"
+
+msgid "Date Modified"
+msgstr "Data de Modificação"
+
+msgid "No GLPIADmit queue item for this ticket."
+msgstr "Nenhum item na fila GLPIADmit para este chamado."
+
+msgid "GLPIADmit Queue Item"
+msgstr "Item da Fila GLPIADmit"
+
+msgid "View Details"
+msgstr "Ver Detalhes"
+
+msgid "Process GLPIADmit AD user creation queue"
+msgstr "Processar fila de criação de usuários AD do GLPIADmit"
+
+msgid "Pending"
+msgstr "Pendente"
+
+msgid "Processing"
+msgstr "Processando"
+
+msgid "Done"
+msgstr "Concluído"
+
+msgid "Error"
+msgstr "Erro"
+
+msgid "Unknown"
+msgstr "Desconhecido"
+
+msgid "Invalid DN format in groups: \"%s\""
+msgstr "Formato DN inválido nos grupos: \"%s\""
+
+msgid "Invalid value for field \"%s\". Please check the format."
+msgstr "Valor inválido para o campo \"%s\". Verifique o formato."
+
+msgid "Configuration updated successfully."
+msgstr "Configuração atualizada com sucesso."
+
+msgid "Please wait 5 seconds between connection tests."
+msgstr "Aguarde 5 segundos entre os testes de conexão."
+
+msgid "LDAP connection successful!"
+msgstr "Conexão LDAP realizada com sucesso!"
+
+msgid "Connection test failed: %s"
+msgstr "Teste de conexão falhou: %s"
+
+msgid "Invalid queue item."
+msgstr "Item de fila inválido."
+
+msgid "Queue item not found."
+msgstr "Item de fila não encontrado."
+
+msgid "This item cannot be retried (permanent error or not in error state)."
+msgstr "Este item não pode ser reprocessado (erro permanente ou não está em estado de erro)."
+
+msgid "Item queued for retry."
+msgstr "Item enfileirado para reprocessamento."
+
+msgid "Force retry is only available for items in error state."
+msgstr "Forçar reprocessamento só está disponível para itens em estado de erro."
+
+msgid "Item queued for forced retry (permanent error flag cleared)."
+msgstr "Item enfileirado para reprocessamento forçado (flag de erro permanente removida)."
+
+msgid "GLPIADmit"
+msgstr "GLPIADmit"
+
+msgid "Warning: CronTask last executed at %s (more than 5 minutes ago)."
+msgstr "Atenção: CronTask executada pela última vez em %s (há mais de 5 minutos)."
+
+msgid "Warning: CronTask has never been executed."
+msgstr "Atenção: CronTask nunca foi executada."
+
+msgid "AD Connection"
+msgstr "Conexão AD"
+
+msgid "Enabled"
+msgstr "Habilitado"
+
+msgid "AD Server"
+msgstr "Servidor AD"
+
+msgid "Hostname or IP address (e.g. dc01.empresa.local). Do NOT include ldaps:// prefix."
+msgstr "Hostname ou endereço IP (ex: dc01.empresa.local). NÃO inclua o prefixo ldaps://."
+
+msgid "Port"
+msgstr "Porta"
+
+msgid "LDAPS default: 636, LDAP default: 389"
+msgstr "LDAPS padrão: 636, LDAP padrão: 389"
+
+msgid "Use SSL (LDAPS)"
+msgstr "Usar SSL (LDAPS)"
+
+msgid "Bind DN"
+msgstr "DN de Bind"
+
+msgid "Service account DN (e.g. CN=svc-glpi,OU=ServiceAccounts,DC=empresa,DC=local)"
+msgstr "DN da conta de serviço (ex: CN=svc-glpi,OU=ServiceAccounts,DC=empresa,DC=local)"
+
+msgid "Bind Password"
+msgstr "Senha de Bind"
+
+msgid "AD Structure"
+msgstr "Estrutura AD"
+
+msgid "Base DN"
+msgstr "DN Base"
+
+msgid "Search base for duplicate checks (e.g. DC=empresa,DC=local)"
+msgstr "Base de busca para verificação de duplicatas (ex: DC=empresa,DC=local)"
+
+msgid "User OU"
+msgstr "OU de Usuários"
+
+msgid "OU where new users will be created (e.g. OU=Users,DC=empresa,DC=local)"
+msgstr "OU onde novos usuários serão criados (ex: OU=Users,DC=empresa,DC=local)"
+
+msgid "Domain"
+msgstr "Domínio"
+
+msgid "AD domain name (e.g. empresa.local)"
+msgstr "Nome do domínio AD (ex: empresa.local)"
+
+msgid "UPN Suffix"
+msgstr "Sufixo UPN"
+
+msgid "Must start with @ (e.g. @empresa.com)"
+msgstr "Deve começar com @ (ex: @empresa.com)"
+
+msgid "Groups"
+msgstr "Grupos"
+
+msgid "AD Groups"
+msgstr "Grupos AD"
+
+msgid "One group DN per line (e.g. CN=VPN-Users,OU=Groups,DC=empresa,DC=local)"
+msgstr "Um DN de grupo por linha (ex: CN=VPN-Users,OU=Groups,DC=empresa,DC=local)"
+
+msgid "Test Connection"
+msgstr "Testar Conexão"
+
+msgid "Queue Item Details"
+msgstr "Detalhes do Item da Fila"
+
+msgid "Ticket ID"
+msgstr "ID do Chamado"
+
+msgid "Department"
+msgstr "Departamento"
+
+msgid "Job Title"
+msgstr "Cargo"
+
+msgid "Permanent Error"
+msgstr "Erro Permanente"
+
+msgid "Yes"
+msgstr "Sim"
+
+msgid "No"
+msgstr "Não"
+
+msgid "Retry"
+msgstr "Reprocessar"
+
+msgid "Force Retry"
+msgstr "Forçar Reprocessamento"
+
+msgid "This is a permanent error. Are you sure you want to force retry?"
+msgstr "Este é um erro permanente. Tem certeza que deseja forçar o reprocessamento?"

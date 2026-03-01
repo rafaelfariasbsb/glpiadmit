@@ -1,0 +1,122 @@
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% set field_options = { 'full_width': true, 'readonly': true } %}
+
+<div class="row">
+    {{ fields.largeTitle(__('Queue Item Details'), 'ti ti-list-details', true) }}
+
+    {{ fields.textField(
+        'tickets_id',
+        item.fields['tickets_id'] ?? '',
+        __('Ticket ID'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'first_name',
+        item.fields['first_name'] ?? '',
+        __('First Name'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'last_name',
+        item.fields['last_name'] ?? '',
+        __('Last Name'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'email',
+        item.fields['email'] ?? '',
+        __('Email'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'department',
+        item.fields['department'] ?? '',
+        __('Department'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'job_title',
+        item.fields['job_title'] ?? '',
+        __('Job Title'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'status_display',
+        status_label,
+        __('Status'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'attempts',
+        item.fields['attempts'] ?? '0',
+        __('Attempts'),
+        field_options
+    ) }}
+
+    {% if item.fields['error_message'] is not empty %}
+        {{ fields.textareaField(
+            'error_message',
+            item.fields['error_message'] ?? '',
+            __('Error Message'),
+            field_options
+        ) }}
+    {% endif %}
+
+    {{ fields.textField(
+        'is_permanent_error',
+        item.fields['is_permanent_error'] == '1' ? __('Yes') : __('No'),
+        __('Permanent Error'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'date_creation',
+        item.fields['date_creation'] ?? '',
+        __('Date Created'),
+        field_options
+    ) }}
+
+    {{ fields.textField(
+        'date_mod',
+        item.fields['date_mod'] ?? '',
+        __('Date Modified'),
+        field_options
+    ) }}
+</div>
+
+{% if can_retry or can_force_retry %}
+    <div class="card-footer mx-n2 mb-n2 d-flex gap-2">
+        {% if can_retry %}
+            <form method="POST" action="queueitem.form.php">
+                <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="id" value="{{ item.fields['id'] }}" />
+                <input type="hidden" name="action" value="retry" />
+                <button type="submit" class="btn btn-warning">
+                    <i class="ti ti-refresh me-1"></i>
+                    <span>{{ __('Retry') }}</span>
+                </button>
+            </form>
+        {% endif %}
+
+        {% if can_force_retry %}
+            <form method="POST" action="queueitem.form.php">
+                <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="id" value="{{ item.fields['id'] }}" />
+                <input type="hidden" name="action" value="force_retry" />
+                <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('{{ __('This is a permanent error. Are you sure you want to force retry?') }}');">
+                    <i class="ti ti-alert-triangle me-1"></i>
+                    <span>{{ __('Force Retry') }}</span>
+                </button>
+            </form>
+        {% endif %}
+    </div>
+{% endif %}

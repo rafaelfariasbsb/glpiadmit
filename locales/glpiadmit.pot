@@ -1,0 +1,286 @@
+# GLPI GLPIADmit Plugin - Translation Template
+# Copyright (C) 2026 Rafael Farias
+# This file is distributed under the same license as the GLPIADmit plugin.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPIADmit 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/rafaelfariasbsb/glpiadmit/issues\n"
+"POT-Creation-Date: 2026-03-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/QueueItem.php
+msgid "GLPIADmit Queue"
+msgid_plural "GLPIADmit Queue"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/QueueItem.php
+msgid "Ticket"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "First Name"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Last Name"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Email"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Status"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Attempts"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Error Message"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Date Created"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Date Modified"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "No GLPIADmit queue item for this ticket."
+msgstr ""
+
+#: src/QueueItem.php
+msgid "GLPIADmit Queue Item"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "View Details"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Process GLPIADmit AD user creation queue"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Pending"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Processing"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Done"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Error"
+msgstr ""
+
+#: src/QueueItem.php
+msgid "Unknown"
+msgstr ""
+
+#: front/config.form.php
+msgid "Invalid DN format in groups: \"%s\""
+msgstr ""
+
+#: front/config.form.php
+msgid "Invalid value for field \"%s\". Please check the format."
+msgstr ""
+
+#: front/config.form.php
+msgid "Configuration updated successfully."
+msgstr ""
+
+#: front/config.form.php
+msgid "Please wait 5 seconds between connection tests."
+msgstr ""
+
+#: front/config.form.php
+msgid "LDAP connection successful!"
+msgstr ""
+
+#: front/config.form.php
+msgid "Connection test failed: %s"
+msgstr ""
+
+#: front/queueitem.form.php
+msgid "Invalid queue item."
+msgstr ""
+
+#: front/queueitem.form.php
+msgid "Queue item not found."
+msgstr ""
+
+#: front/queueitem.form.php
+msgid "This item cannot be retried (permanent error or not in error state)."
+msgstr ""
+
+#: front/queueitem.form.php
+msgid "Item queued for retry."
+msgstr ""
+
+#: front/queueitem.form.php
+msgid "Force retry is only available for items in error state."
+msgstr ""
+
+#: front/queueitem.form.php
+msgid "Item queued for forced retry (permanent error flag cleared)."
+msgstr ""
+
+#: front/config.php
+msgid "GLPIADmit"
+msgstr ""
+
+#: front/config.php
+msgid "Warning: CronTask last executed at %s (more than 5 minutes ago)."
+msgstr ""
+
+#: front/config.php
+msgid "Warning: CronTask has never been executed."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "AD Connection"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Enabled"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "AD Server"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Hostname or IP address (e.g. dc01.empresa.local). Do NOT include ldaps:// prefix."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Port"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "LDAPS default: 636, LDAP default: 389"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Use SSL (LDAPS)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Bind DN"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Service account DN (e.g. CN=svc-glpi,OU=ServiceAccounts,DC=empresa,DC=local)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Bind Password"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "AD Structure"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Base DN"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Search base for duplicate checks (e.g. DC=empresa,DC=local)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "User OU"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "OU where new users will be created (e.g. OU=Users,DC=empresa,DC=local)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Domain"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "AD domain name (e.g. empresa.local)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "UPN Suffix"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Must start with @ (e.g. @empresa.com)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Groups"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "AD Groups"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "One group DN per line (e.g. CN=VPN-Users,OU=Groups,DC=empresa,DC=local)"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Test Connection"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Queue Item Details"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Ticket ID"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Department"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Job Title"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Permanent Error"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Yes"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "No"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Retry"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "Force Retry"
+msgstr ""
+
+#: templates/queueitem.html.twig
+msgid "This is a permanent error. Are you sure you want to force retry?"
+msgstr ""
